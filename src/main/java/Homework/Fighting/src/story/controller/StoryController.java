@@ -1,15 +1,20 @@
 package Homework.Fighting.src.story.controller;
 
+import Homework.Fighting.config.BaseException;
+import Homework.Fighting.config.BaseReponse;
 import Homework.Fighting.src.story.dto.BlogDto;
 import Homework.Fighting.src.story.dto.UserDto;
 import Homework.Fighting.src.story.entity.BlogEntity;
 import Homework.Fighting.src.story.service.StoryService;
+import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
+@Transactional
 public class StoryController {
 
     private final StoryService storyService;
@@ -20,15 +25,25 @@ public class StoryController {
     }*/
 
     //유저 생성
-    @PostMapping("/user")
-    public String createUser(@RequestBody UserDto userDto){
+    /*@PostMapping("/user")
+    public BaseReponse<String> createUser(@RequestBody @Valid UserDto userDto){
         try{
             storyService.createUser(userDto);
-            return "계정이 생성되었습니다";
+            return new BaseReponse<>("계정이 생성되었습니다");
         }
         catch (Exception e){
-            e.getMessage();
-            return "예외처리";
+            return new BaseReponse<>(e.getMessage());
+        }
+    }*/
+
+    @PostMapping("/user")
+    public BaseReponse<String> createUser(@RequestBody @Valid UserDto userDto){
+        try{
+            storyService.createUser(userDto);
+            return new BaseReponse<>("계정이 생성되었습니다.");
+        }
+        catch (BaseException e){
+            return new BaseReponse<>(e.getStatus());
         }
     }
 

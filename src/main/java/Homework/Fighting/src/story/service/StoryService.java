@@ -1,6 +1,7 @@
 package Homework.Fighting.src.story.service;
 
 import Homework.Fighting.config.BaseEntity;
+import Homework.Fighting.config.BaseException;
 import Homework.Fighting.config.Status;
 import Homework.Fighting.src.story.dto.BlogDto;
 import Homework.Fighting.src.story.dto.UserDto;
@@ -22,7 +23,7 @@ public class StoryService {
     private final UserRepository userRepository;
     private final BlogRepository blogRepository;
 
-    public void createUser(UserDto userDto) throws Exception {
+    public void createUser(UserDto userDto) throws BaseException {
         try {
             UserEntity user = new UserEntity(userDto);
             userRepository.save(user);
