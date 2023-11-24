@@ -1,7 +1,7 @@
 package Homework.Fighting.src.story.service;
 
-import Homework.Fighting.config.BaseEntity;
 import Homework.Fighting.config.BaseException;
+import Homework.Fighting.config.BaseResponseStatus;
 import Homework.Fighting.config.Status;
 import Homework.Fighting.src.story.dto.BlogDto;
 import Homework.Fighting.src.story.dto.UserDto;
@@ -24,19 +24,22 @@ public class StoryService {
     private final BlogRepository blogRepository;
 
     public void createUser(UserDto userDto) throws BaseException {
-        try {
-            UserEntity user = new UserEntity(userDto);
-            userRepository.save(user);
-        }
-        catch (Exception e){
-            throw e;
+        if(userRepository.existsUserEntitiesByNickname(userDto.getNickname()) == true){
+            throw new BaseException(BaseResponseStatus.User_nickname_duplicate);
         }
 
+        UserEntity user = new UserEntity(userDto);
+        userRepository.save(user);
+
     }
-    public void createBlog(BlogDto blogDto, Long userId) throws Exception{
+    public void createBlog(BlogDto blogDto, Long userId) throws BaseException{
         UserEntity user = userRepository.findUserEntityByUserIdAndStatus(userId, Status.ACTIVE).orElseThrow(
-                () ->  new Exception("사용자가 존재하지 않습니다")
+                () ->  new BaseException(BaseResponseStatus.User_no_exist)
         );
+
+        if(blogRepository.existsByName(blogDto.getName()) == true){
+            throw new BaseException(BaseResponseStatus.Blog_name_already_exist);
+        }
 
         BlogEntity blog = new BlogEntity(blogDto, user);
         user.getBlogList().add(blog);
@@ -45,13 +48,13 @@ public class StoryService {
         System.out.println("블로그가 생성 되었습니다");
     }
 
-    public void updateBlog(BlogDto blogDto, Long userId, Long blogId) throws Exception{
+    public void updateBlog(BlogDto blogDto, Long userId, Long blogId) throws BaseException{
         UserEntity user = userRepository.findUserEntityByUserIdAndStatus(userId, Status.ACTIVE).orElseThrow(
-                () ->  new Exception("사용자가 존재하지 않습니다")
+                () ->  new BaseException(BaseResponseStatus.User_no_exist)
         );
 
         BlogEntity blog = blogRepository.findBlogEntityByBlogIdAndStatus(blogId, Status.ACTIVE).orElseThrow(
-                () -> new Exception("블로그가 존재하지 않습니다")
+                () -> new BaseException(BaseResponseStatus.Blog_no_exist)
         );
 
         if(blog.getUser() == user){
@@ -60,13 +63,13 @@ public class StoryService {
             blogRepository.save(blog);
         }
         else {
-            throw new Exception("해당 사용자는 권한이 없습니다");
+            throw new BaseException(BaseResponseStatus.No_privilge);
         }
     }
 
-    public BlogEntity getBlogScreen(Long blogId) throws Exception{
+    public BlogEntity getBlogScreen(Long blogId) throws BaseException{
         return blogRepository.findBlogEntityByBlogIdAndStatus(blogId, Status.ACTIVE).orElseThrow(
-                () -> new Exception("블로그가 존재하지 않습니다")
+                () -> new BaseException(BaseResponseStatus.Blog_no_exist)
         );
     }
 }

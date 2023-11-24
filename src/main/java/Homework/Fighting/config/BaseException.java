@@ -4,9 +4,10 @@ import lombok.Getter;
 
 @Getter
 public class BaseException extends RuntimeException{
-    private final BaseReponseStatus status;
+    //예상한 예외를 따로 잡아주어야 하므로 status 필드 추가
+    private final BaseResponseStatus status;
 
-    BaseException(BaseReponseStatus status){
+    public BaseException(BaseResponseStatus status){
         super(status.getMessage());
         this.status = status;
     }

@@ -10,5 +10,6 @@ import java.util.Optional;
 @Repository
 public interface BlogRepository extends JpaRepository<BlogEntity, Long> {
     public Optional<BlogEntity> findBlogEntityByBlogIdAndStatus(Long id, Status status);
+    public boolean existsByName(String name);
 
 }
