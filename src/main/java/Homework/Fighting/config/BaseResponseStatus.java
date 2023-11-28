@@ -7,7 +7,13 @@ public enum BaseResponseStatus {
 
     //요청 성공 시
     Success(true, 200, "ok"),
+    //입력 문제
+    INPUT_VALUE_INVALID(false, 2000, "입력한 값을 확인해주세요"),
+
+
+
     //외적 문제
+
     No_privilge(false, 3000, "권한이 없습니다."),
 
     //User 계정 생성 관련 이슈
