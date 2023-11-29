@@ -45,7 +45,6 @@ public class StoryService {
         user.getBlogList().add(blog);
         blogRepository.save(blog);
 
-        System.out.println("블로그가 생성 되었습니다");
     }
 
     public void updateBlog(BlogDto blogDto, Long userId, Long blogId) throws BaseException{
@@ -58,8 +57,11 @@ public class StoryService {
         );
 
         if(blog.getUser() == user){
-            blog.updateBlog(blogDto);
+            if(blogRepository.existsByName(blogDto.getName()) == true){
+                throw new BaseException(BaseResponseStatus.Blog_name_already_exist);
+            }
 
+            blog.updateBlog(blogDto);
             blogRepository.save(blog);
         }
         else {

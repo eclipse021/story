@@ -48,26 +48,26 @@ public class StoryController {
 
     //블로그 생성
     @PostMapping("/blog")
-    public String createBlog(@RequestBody BlogDto blogDto, @RequestBody Long userId){
+    public BaseResponse<String> createBlog(@RequestBody BlogDto blogDto, @RequestBody Long userId){
         try{
             storyService.createBlog(blogDto, userId);
-            return "블로그가 생성되었습니다";
+            return new BaseResponse<>("블로그가 생성되었습니다.");
         }
-       catch (Exception e){
-            e.getMessage();
-            return "예외처리";
+       catch (BaseException e){
+            System.out.println(e.getMessage());
+            return new BaseResponse<>(e.getStatus());
        }
     }
 
     //블로그 수정
     @PatchMapping("/blog/{blog_id}")
-    public String updateBlog(@RequestBody BlogDto blogDto, @RequestBody Long userId, @PathVariable("blog_id") Long blogId){
+    public BaseResponse<String> updateBlog(@RequestBody BlogDto blogDto, @RequestBody Long userId, @PathVariable("blog_id") Long blogId){
         try{
             storyService.updateBlog(blogDto, userId, blogId);
-            return "블로그가 수정되었습니다";
+            return new BaseResponse<>("블로그가 수정되었습니다.");
         }
-        catch(Exception e){
-            return e.getMessage();
+        catch(BaseException e){
+            return new BaseResponse<>(e.getStatus());
         }
     }
 

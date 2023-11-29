@@ -11,10 +11,10 @@ import lombok.Setter;
 @NoArgsConstructor
 public class UserDto {
     @NotBlank(message = "이름을 입력해주세요")
-    @Size(min = 1, max = 20, message = "20자 이내로 입력해주세요")
+    @Size(min = 1, max = 20, message = "닉네임을 20자 이내로 입력해주세요")
     String nickname;
 
-    @Size(max = 255, message = "255자 이내로 입력해주세요")
+    @Size(max = 255, message = "자기소개를 255자 이내로 입력해주세요")
     String selfInformation;
 
     @Size(max = 255)
