@@ -1,6 +1,7 @@
 package Homework.Fighting.src.story.entity;
 
 import Homework.Fighting.config.BaseEntity;
+import Homework.Fighting.src.story.dto.PostDto;
 import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
 
@@ -38,4 +39,12 @@ public class PostEntity extends BaseEntity {
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     List<CommentEntity> commentList = new ArrayList<CommentEntity>();
+
+    public PostEntity(PostDto postDto, UserEntity user, BlogEntity blog){
+        this.title = postDto.getTitle();
+        this.contents = postDto.getContents();
+        this.user = user;
+        this.blog = blog;
+    }
+
 }

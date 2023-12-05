@@ -4,8 +4,10 @@ import Homework.Fighting.config.BaseException;
 import Homework.Fighting.config.BaseResponseStatus;
 import Homework.Fighting.config.Status;
 import Homework.Fighting.src.story.dto.BlogDto;
+import Homework.Fighting.src.story.dto.PostDto;
 import Homework.Fighting.src.story.dto.UserDto;
 import Homework.Fighting.src.story.entity.BlogEntity;
+import Homework.Fighting.src.story.entity.PostEntity;
 import Homework.Fighting.src.story.entity.UserEntity;
 import Homework.Fighting.src.story.repository.BlogRepository;
 import Homework.Fighting.src.story.repository.StoryRepository;
@@ -73,5 +75,19 @@ public class StoryService {
         return blogRepository.findBlogEntityByBlogIdAndStatus(blogId, Status.ACTIVE).orElseThrow(
                 () -> new BaseException(BaseResponseStatus.Blog_no_exist)
         );
+    }
+
+    public void createPost(PostDto postDto, Long userId, Long blogId) throws BaseException {
+        UserEntity user = userRepository.findUserEntityByUserIdAndStatus(userId, Status.ACTIVE).orElseThrow(
+                () -> new BaseException(BaseResponseStatus.User_no_exist)
+        );
+        BlogEntity blog = blogRepository.findBlogEntityByBlogIdAndStatus(blogId, Status.ACTIVE).orElseThrow(
+                () -> new BaseException(BaseResponseStatus.Blog_no_exist)
+        );
+
+        PostEntity post = new PostEntity(postDto, user, blog);
+        //연관관계 입장에서는 추가 안 해줘도 되지만 객체 입장에서 추가해주는게 좋음
+        user.getPostList().add(post);
+        blog.getPostList().add(post);
     }
 }
