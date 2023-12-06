@@ -44,4 +44,10 @@ public class UserEntity extends BaseEntity {
         this.selfInformation = userDto.getSelfInformation();
         this.profile = userDto.getProfile();
     }
+
+    public void updateUser(UserDto userDto){
+        this.nickname = userDto.getNickname();
+        this.selfInformation = userDto.getSelfInformation();
+        this.profile = userDto.getProfile();
+    }
 }

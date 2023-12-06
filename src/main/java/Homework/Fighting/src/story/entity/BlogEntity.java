@@ -43,6 +43,7 @@ public class BlogEntity extends BaseEntity {
         this.name = blogDto.getName();
         this.introduction = blogDto.getIntroduction();
         this.profile = blogDto.getProfile();
+        this.user = user;
     }
 
     public void setStatus(Status status){this.status = status;}
