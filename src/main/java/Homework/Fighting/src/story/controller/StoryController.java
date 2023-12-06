@@ -26,11 +26,24 @@ public class StoryController {
         this.storyService = storyService;
     }*/
 
+    //계정 생성 api
     @PostMapping("/user")
     public BaseResponse<String> createUser(@RequestBody @Valid UserDto userDto){
         try{
             storyService.createUser(userDto);
             return new BaseResponse<>("계정이 생성되었습니다.");
+        }
+        catch (BaseException e){
+            return new BaseResponse<>(e.getStatus());
+        }
+    }
+
+    //계정 수정 api
+    @PatchMapping("/user/{user_id}")
+    public BaseResponse<String> updateUser(@RequestBody UserDto userDto, @PathVariable("user_id") Long userId){
+        try{
+            storyService.updateUser(userDto, userId);
+            return new BaseResponse<>("계정이 변경되었습니다.");
         }
         catch (BaseException e){
             return new BaseResponse<>(e.getStatus());

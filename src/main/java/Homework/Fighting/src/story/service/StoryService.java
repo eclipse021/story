@@ -90,4 +90,17 @@ public class StoryService {
         user.getPostList().add(post);
         blog.getPostList().add(post);
     }
+
+    public void updateUser(UserDto userDto, Long userId) throws BaseException{
+        UserEntity user = userRepository.findUserEntityByUserIdAndStatus(userId, Status.ACTIVE).orElseThrow(
+                () -> new BaseException(BaseResponseStatus.User_no_exist)
+        );
+        if(userRepository.existsUserEntitiesByNickname(userDto.getNickname()) == true){
+            throw new BaseException(BaseResponseStatus.User_nickname_duplicate);
+        }
+        else {
+            user.updateUser(userDto);
+            userRepository.save(user);
+        }
+    }
 }
