@@ -1,0 +1,23 @@
+server: ''
+address: 0.0.0.0
+port: '8080'
+
+# spring.datasource.url=jdbc:mysql://127.0.0.1:3306/story?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&serverTimezone=Asia/Seoul
+# spring.datasource.username=javauser
+# spring.datasource.password=glory510
+
+spring:
+  datasource:
+    #MYSQL
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: yahang2008
+    url: jdbc:mysql://db-story.ctfdpev5h7na.ap-northeast-2.rds.amazonaws.com:3306/story
+    password: glory510
+  jpa:
+    properties:
+      hibernate:
+        format_sql: 'true'
+    show-sql: 'true '
+    hibernate:
+      ddl-auto: update
+
