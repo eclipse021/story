@@ -1,4 +1,4 @@
-package Homework.Fighting.src.story.dto;
+package Homework.Fighting.src.user.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -19,4 +19,6 @@ public class UserDto {
 
     @Size(max = 255)
     String profile;
+
+
 }

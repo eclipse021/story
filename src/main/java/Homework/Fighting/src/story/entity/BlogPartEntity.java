@@ -1,6 +1,7 @@
 package Homework.Fighting.src.story.entity;
 
 import Homework.Fighting.config.BaseEntity;
+import Homework.Fighting.src.user.entity.UserEntity;
 import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
 

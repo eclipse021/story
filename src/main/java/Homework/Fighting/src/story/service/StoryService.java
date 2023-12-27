@@ -5,14 +5,14 @@ import Homework.Fighting.config.BaseResponseStatus;
 import Homework.Fighting.config.Status;
 import Homework.Fighting.src.story.dto.BlogDto;
 import Homework.Fighting.src.story.dto.PostDto;
-import Homework.Fighting.src.story.dto.UserDto;
 import Homework.Fighting.src.story.entity.BlogEntity;
 import Homework.Fighting.src.story.entity.PostEntity;
-import Homework.Fighting.src.story.entity.UserEntity;
+import Homework.Fighting.src.user.entity.UserEntity;
 import Homework.Fighting.src.story.repository.BlogRepository;
 import Homework.Fighting.src.story.repository.StoryRepository;
 import Homework.Fighting.src.story.repository.PostRepository;
 import Homework.Fighting.src.story.repository.UserRepository;
+import Homework.Fighting.src.user.dto.UserDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

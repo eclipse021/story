@@ -3,6 +3,7 @@ package Homework.Fighting.src.story.entity;
 import Homework.Fighting.config.BaseEntity;
 import Homework.Fighting.config.Status;
 import Homework.Fighting.src.story.dto.BlogDto;
+import Homework.Fighting.src.user.entity.UserEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

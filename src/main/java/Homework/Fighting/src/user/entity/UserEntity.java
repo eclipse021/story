@@ -1,7 +1,10 @@
-package Homework.Fighting.src.story.entity;
+package Homework.Fighting.src.user.entity;
 
 import Homework.Fighting.config.BaseEntity;
-import Homework.Fighting.src.story.dto.UserDto;
+import Homework.Fighting.src.story.entity.BlogEntity;
+import Homework.Fighting.src.story.entity.CommentEntity;
+import Homework.Fighting.src.story.entity.PostEntity;
+import Homework.Fighting.src.user.dto.UserDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

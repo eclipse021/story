@@ -2,7 +2,7 @@ package Homework.Fighting.src.story.repository;
 
 
 import Homework.Fighting.config.Status;
-import Homework.Fighting.src.story.entity.UserEntity;
+import Homework.Fighting.src.user.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
