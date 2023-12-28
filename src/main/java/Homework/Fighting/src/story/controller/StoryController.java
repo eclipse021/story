@@ -40,7 +40,7 @@ public class StoryController {
 
     //계정 수정 api
     @PatchMapping("/user/{user_id}")
-    public BaseResponse<String> updateUser(@RequestBody UserDto userDto, @PathVariable("user_id") Long userId){
+    public BaseResponse<String> updateUser(@RequestBody @Valid UserDto userDto, @PathVariable("user_id") Long userId){
         try{
             storyService.updateUser(userDto, userId);
             return new BaseResponse<>("계정이 변경되었습니다.");
@@ -53,7 +53,7 @@ public class StoryController {
     //블로그 생성
     //로그인 세션을 만들기 전까지 userId는 1로 통일
     @PostMapping("/blog")
-    public BaseResponse<String> createBlog(@RequestBody BlogDto blogDto){
+    public BaseResponse<String> createBlog(@RequestBody @Valid BlogDto blogDto){
         try{
             storyService.createBlog(blogDto, userId);
             return new BaseResponse<>("블로그가 생성되었습니다.");
@@ -66,7 +66,7 @@ public class StoryController {
 
     //블로그 수정
     @PatchMapping("/blog/{blog_id}")
-    public BaseResponse<String> updateBlog(@RequestBody BlogDto blogDto, @PathVariable("blog_id") Long blogId){
+    public BaseResponse<String> updateBlog(@RequestBody @Valid BlogDto blogDto, @PathVariable("blog_id") Long blogId){
         try{
             storyService.updateBlog(blogDto, userId, blogId);
             return new BaseResponse<>("블로그가 수정되었습니다.");
@@ -78,7 +78,7 @@ public class StoryController {
 
     //게시글 생성
     @PostMapping("/{blog_id}/post")
-    public BaseResponse<String> createPost(@RequestBody PostDto postDto, @PathVariable("blog_id") Long blogId){
+    public BaseResponse<String> createPost(@RequestBody @Valid PostDto postDto, @PathVariable("blog_id") Long blogId){
         try{
             storyService.createPost(postDto, userId, blogId);
             return new BaseResponse<>("게시글이 생성되었습니다.");

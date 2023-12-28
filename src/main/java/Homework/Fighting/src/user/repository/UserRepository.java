@@ -1,4 +1,4 @@
-package Homework.Fighting.src.story.repository;
+package Homework.Fighting.src.user.repository;
 
 
 import Homework.Fighting.config.Status;

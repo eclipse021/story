@@ -42,6 +42,9 @@ public class UserEntity extends BaseEntity {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     List<CommentEntity> commentList = new ArrayList<CommentEntity>();
 
+    @Column
+    private String role;
+
     public UserEntity(UserDto userDto){
         this.nickname = userDto.getNickname();
         this.selfInformation = userDto.getSelfInformation();

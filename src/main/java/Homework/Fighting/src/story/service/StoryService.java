@@ -11,7 +11,7 @@ import Homework.Fighting.src.user.entity.UserEntity;
 import Homework.Fighting.src.story.repository.BlogRepository;
 import Homework.Fighting.src.story.repository.StoryRepository;
 import Homework.Fighting.src.story.repository.PostRepository;
-import Homework.Fighting.src.story.repository.UserRepository;
+import Homework.Fighting.src.user.repository.UserRepository;
 import Homework.Fighting.src.user.dto.UserDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
