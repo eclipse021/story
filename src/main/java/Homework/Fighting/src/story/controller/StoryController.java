@@ -101,6 +101,8 @@ public class StoryController {
         }
     }
 
-
-
+    @GetMapping("/user/hello")
+    public String practiceSecurity(){
+        return "hello";
+    }
 }

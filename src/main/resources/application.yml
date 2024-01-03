@@ -10,8 +10,8 @@ spring:
   datasource:
     #MYSQL
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: yahang2008
-    url: jdbc:mysql://db-story.ctfdpev5h7na.ap-northeast-2.rds.amazonaws.com:3306/story
+    username: javauser
+    url: jdbc:mysql://127.0.0.1:3306/story?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&serverTimezone=Asia/Seoul
     password: glory510
   jpa:
     properties:
@@ -19,5 +19,5 @@ spring:
         format_sql: 'true'
     show-sql: 'true '
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
 
