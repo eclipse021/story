@@ -45,10 +45,10 @@ public class SecurityConfig {
                     .anyRequest().permitAll()
         );
 */
-        //user, admin과 같이 권한이 없는 페이지에 들어갈 때 login
-       /* http.formLogin((formLogin) ->
+        /*http.formLogin((formLogin) ->
                 formLogin
-                        .loginPage("/login")
+                        .loginPage("/loginForm") // user, admin과 괕이 권한이 필요한 페이지에 들어갈 때 login
+                        .loginProcessingUrl("/login") // login 주소가 호출되면 시큐리티가 낚아채서 로그인 진행
 
         );*/
         return http.build();

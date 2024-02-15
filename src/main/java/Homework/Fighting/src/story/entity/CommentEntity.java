@@ -37,4 +37,14 @@ public class CommentEntity extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
     private PostEntity post;
+
+    public CommentEntity(String contetns, int groupNumber, int commentLevel, UserEntity user, PostEntity post){
+        this.contents = contetns;
+        this.groupNumber = groupNumber;
+        this.commentLevel = commentLevel;
+        this.countLike = 0;
+        this.user = user;
+        this.post = post;
+    }
+
 }

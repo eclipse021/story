@@ -4,9 +4,12 @@ import Homework.Fighting.config.BaseException;
 import Homework.Fighting.config.BaseResponseStatus;
 import Homework.Fighting.config.Status;
 import Homework.Fighting.src.story.dto.BlogDto;
+import Homework.Fighting.src.story.dto.CommentDto;
 import Homework.Fighting.src.story.dto.PostDto;
 import Homework.Fighting.src.story.entity.BlogEntity;
+import Homework.Fighting.src.story.entity.CommentEntity;
 import Homework.Fighting.src.story.entity.PostEntity;
+import Homework.Fighting.src.story.repository.CommentRepository;
 import Homework.Fighting.src.user.entity.UserEntity;
 import Homework.Fighting.src.story.repository.BlogRepository;
 import Homework.Fighting.src.story.repository.StoryRepository;
@@ -16,6 +19,8 @@ import Homework.Fighting.src.user.dto.UserDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class StoryService {
@@ -24,6 +29,7 @@ public class StoryService {
     private final PostRepository postRepository;
     private final UserRepository userRepository;
     private final BlogRepository blogRepository;
+    private final CommentRepository commentRepository;
 
     public void createUser(UserDto userDto) throws BaseException {
         if(userRepository.existsUserEntitiesByNickname(userDto.getNickname()) == true){
@@ -102,5 +108,29 @@ public class StoryService {
             user.updateUser(userDto);
             userRepository.save(user);
         }
+    }
+
+    public void createComment(CommentDto commentDto,Long userId ,Long postId) {
+        //Optional을 사용함으로 자동으로 유효성 검사도 진행해준다.
+        UserEntity user = userRepository.findUserEntityByUserIdAndStatus(userId, Status.ACTIVE).orElseThrow(
+                () -> new BaseException(BaseResponseStatus.User_no_exist)
+        );
+
+        PostEntity post = postRepository.findByPostIdAndStatus(postId, Status.ACTIVE).orElseThrow(
+                () -> new BaseException(BaseResponseStatus.Blog_no_exist)
+        );
+        try{
+            //groupNumber가 없을 수도 있으니 유효성 검사 후 값을 넣어주자.
+            Integer maxGroupNumber = commentRepository.maxGroupNumber();
+            if(maxGroupNumber == null){
+                CommentEntity comment = new CommentEntity(commentDto.getContent(),1 ,0,user,post);
+            }else {
+                CommentEntity comment = new CommentEntity(commentDto.getContent(),maxGroupNumber+1 ,0,user,post);
+            }
+
+        } catch (Exception e){
+          throw new BaseException(BaseResponseStatus.Error);
+        };
+
     }
 }

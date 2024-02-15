@@ -3,8 +3,10 @@ package Homework.Fighting.src.story.controller;
 import Homework.Fighting.config.BaseException;
 import Homework.Fighting.config.BaseResponse;
 import Homework.Fighting.src.story.dto.BlogDto;
+import Homework.Fighting.src.story.dto.CommentDto;
 import Homework.Fighting.src.story.dto.PostDto;
 import Homework.Fighting.src.story.entity.BlogEntity;
+import Homework.Fighting.src.story.entity.CommentEntity;
 import Homework.Fighting.src.story.service.StoryService;
 import Homework.Fighting.src.user.dto.UserDto;
 import jakarta.transaction.Transactional;
@@ -101,8 +103,18 @@ public class StoryController {
         }
     }
 
-    @GetMapping("/user/hello")
-    public String practiceSecurity(){
-        return "hello";
+    //댓글 작성
+    @PostMapping("/{post_id}/comment")
+    public BaseResponse<String> createComment(@RequestBody @Valid CommentDto commentDto, @PathVariable("post_id") Long postId){
+        try{
+            storyService.createComment(commentDto,userId ,postId);
+            return new BaseResponse<>("댓글이 작성되었습니다.");
+        }catch (Exception e){
+            return new BaseResponse<>(e.getMessage());
+        }
     }
+
+
+
+
 }
