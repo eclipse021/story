@@ -28,7 +28,7 @@ public class StoryController {
     }*/
 
     //계정 생성 api
-    @PostMapping("/user")
+    /*@PostMapping("/user")
     public BaseResponse<String> createUser(@RequestBody @Valid UserDto userDto){
         try{
             storyService.createUser(userDto);
@@ -37,7 +37,7 @@ public class StoryController {
         catch (BaseException e){
             return new BaseResponse<>(e.getStatus());
         }
-    }
+    }*/
 
     //계정 수정 api
     @PatchMapping("/user/{user_id}")

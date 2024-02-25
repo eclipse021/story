@@ -4,7 +4,7 @@ import Homework.Fighting.config.BaseEntity;
 import Homework.Fighting.src.story.entity.BlogEntity;
 import Homework.Fighting.src.story.entity.CommentEntity;
 import Homework.Fighting.src.story.entity.PostEntity;
-import Homework.Fighting.src.user.dto.LoginDto;
+import Homework.Fighting.src.user.dto.JoinDto;
 import Homework.Fighting.src.user.dto.UserDto;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -58,17 +58,17 @@ public class UserEntity extends BaseEntity {
     @Column
     private String role;
 
-    public UserEntity(UserDto userDto){
+    /*public UserEntity(UserDto userDto){
         this.nickname = userDto.getNickname();
         this.selfInformation = userDto.getSelfInformation();
         this.profile = userDto.getProfile();
-    }
+    }*/
 
-    public UserEntity(LoginDto loginDto, String encPassword){
-        this.username = loginDto.getUsername();
+    public UserEntity(JoinDto joinDto, String encPassword){
+        this.username = joinDto.getUsername();
         this.password = encPassword;
-        this.email = loginDto.getEmail();
-        this.nickname = loginDto.getNickname();
+        this.email = joinDto.getEmail();
+        this.nickname = joinDto.getNickname();
     }
 
     public void updateUser(UserDto userDto){

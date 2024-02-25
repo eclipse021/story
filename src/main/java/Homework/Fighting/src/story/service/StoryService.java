@@ -31,7 +31,7 @@ public class StoryService {
     private final BlogRepository blogRepository;
     private final CommentRepository commentRepository;
 
-    public void createUser(UserDto userDto) throws BaseException {
+    /*public void createUser(UserDto userDto) throws BaseException {
         if(userRepository.existsUserEntitiesByNickname(userDto.getNickname()) == true){
             throw new BaseException(BaseResponseStatus.User_nickname_duplicate);
         }
@@ -39,7 +39,7 @@ public class StoryService {
         UserEntity user = new UserEntity(userDto);
         userRepository.save(user);
 
-    }
+    }*/
     public void createBlog(BlogDto blogDto, Long userId) throws BaseException{
         UserEntity user = userRepository.findUserEntityByUserIdAndStatus(userId, Status.ACTIVE).orElseThrow(
                 () ->  new BaseException(BaseResponseStatus.User_no_exist)

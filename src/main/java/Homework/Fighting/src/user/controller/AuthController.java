@@ -3,7 +3,7 @@ package Homework.Fighting.src.user.controller;
 
 import Homework.Fighting.config.BaseException;
 import Homework.Fighting.config.BaseResponse;
-import Homework.Fighting.src.user.dto.LoginDto;
+import Homework.Fighting.src.user.dto.JoinDto;
 import Homework.Fighting.src.user.service.AuthService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -21,11 +21,11 @@ public class AuthController {
     private final AuthService authService;
 
     //회원가입 api
-    @PostMapping("/signup")
+    @PostMapping("/join")
     @ResponseBody
-    public BaseResponse<String> signUp(@RequestBody @Valid LoginDto loginDto){
+    public BaseResponse<String> join(@RequestBody @Valid JoinDto joinDto){
         try{
-            authService.signUp(loginDto);
+            authService.join(joinDto);
             return new BaseResponse<>("계정이 생성되었습니다.");
         }
         catch (BaseException e){

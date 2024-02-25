@@ -1,6 +1,6 @@
 package Homework.Fighting.src.user.service;
 
-import Homework.Fighting.src.user.dto.LoginDto;
+import Homework.Fighting.src.user.dto.JoinDto;
 import Homework.Fighting.src.user.entity.UserEntity;
 import Homework.Fighting.src.user.repository.UserRepository;
 import jakarta.transaction.Transactional;
@@ -13,14 +13,14 @@ import org.springframework.stereotype.Service;
 @Transactional
 public class AuthService {
 
-    private final UserRepository userRepository;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
-    public void signUp(LoginDto loginDto) {
+    private final UserRepository userRepository; //DI
+    private final BCryptPasswordEncoder bCryptPasswordEncoder; //DI
+    public void join(JoinDto joinDto) {
         //비밀번호 암호화
-        String rawPassword = loginDto.getPassword();;
+        String rawPassword = joinDto.getPassword();;
         String encPasswrod = bCryptPasswordEncoder.encode(rawPassword);
 
-        UserEntity userEntity = new UserEntity(loginDto, encPasswrod);
+        UserEntity userEntity = new UserEntity(joinDto, encPasswrod);
         userEntity.setRole("ROLE_USER");
 
         userRepository.save(userEntity);
