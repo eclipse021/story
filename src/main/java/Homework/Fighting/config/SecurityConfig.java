@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -15,6 +16,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @AllArgsConstructor
 public class SecurityConfig {
 
+    private final CorsConfig corsConfig;
     @Bean //비밀번호 암호화를 담당하는 메소드
     public BCryptPasswordEncoder encodePwd(){
         return new BCryptPasswordEncoder();
@@ -26,33 +28,28 @@ public class SecurityConfig {
         //http.csrf(AbstractHttpConfigurer::disable);
         //람다 활용 방식
         http.csrf((csrfConfig) ->  csrfConfig.disable());
+        http.sessionManagement((sessionManagement) ->
+                sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)); // 세션을 안 쓰는 stateless 만들기
+        http.httpBasic((basic)->basic.disable()); //bearer방식을 쓰기 위해 basic disable 하기
+        //http.addFilter(corsFilter);
+        http.apply(new MyCustomDsl()); // 최신 버전은 apply가 사라져 http.with(new MyCustomDsl(), Customizer.withDefaults());로 대체해야함
 
-
-        // authorizeRequests는 deprecated로 권장 되지 않으므로 authorizeHttpRequests 사용하기
         http.authorizeRequests()
                 .requestMatchers("/user/**").authenticated()
-                .requestMatchers("/admin/**").hasRole("ADMIN");
-                //.anyRequest().permitAll();
+                .requestMatchers("/admin/**").hasRole("ADMIN")
+                .anyRequest().permitAll();
 
-
-
-        //오류 발생
-        /*http.authorizeHttpRequests((authorize) ->
-                authorize
-                    .requestMatchers("/hello/**").authenticated()
-                    .requestMatchers("/user/**").authenticated()
-                    .requestMatchers("/admin/**").hasRole("ROLE_ADMIN")
-                    .anyRequest().permitAll()
-        );
-*/
-        /*http.formLogin((formLogin) ->
-                formLogin
-                        .loginPage("/loginForm") // user, admin과 괕이 권한이 필요한 페이지에 들어갈 때 login
-                        .loginProcessingUrl("/login") // login 주소가 호출되면 시큐리티가 낚아채서 로그인 진행
-
-        );*/
         return http.build();
     }
 
+    public class MyCustomDsl extends AbstractHttpConfigurer<MyCustomDsl, HttpSecurity>{
 
+        @Override
+        public void configure(HttpSecurity http) throws Exception {
+            //super.configure(builder);
+
+            http.addFilter(corsConfig.corsFilter());
+
+        }
+    }
 }
