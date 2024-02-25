@@ -28,6 +28,13 @@ public enum BaseResponseStatus {
     Blog_name_already_exist(false, 4100, "블로그 이름이 이미 존재합니다."),
     Blog_no_exist(false, 4105, "블로그가 존재하지 않습니다."),
 
+
+    //Post 관련 이슈
+    Post_no_exist(false, 4200, "게시글이 존재하지 않습니다."),
+
+
+
+
     //이슈
     Error(false, 5000, "에러가 발생했습니다.");
     private boolean isSuccess;

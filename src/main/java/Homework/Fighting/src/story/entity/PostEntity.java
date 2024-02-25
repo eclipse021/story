@@ -4,11 +4,13 @@ import Homework.Fighting.config.BaseEntity;
 import Homework.Fighting.src.story.dto.PostDto;
 import Homework.Fighting.src.user.entity.UserEntity;
 import jakarta.persistence.*;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
 @Entity
 @Table(name = "post")
 @NoArgsConstructor
@@ -43,7 +45,7 @@ public class PostEntity extends BaseEntity {
 
     public PostEntity(PostDto postDto, UserEntity user, BlogEntity blog){
         this.title = postDto.getTitle();
-        this.contents = postDto.getContents();
+        this.contents = postDto.getContent();
         this.user = user;
         this.blog = blog;
     }

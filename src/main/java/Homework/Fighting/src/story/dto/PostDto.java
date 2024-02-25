@@ -17,6 +17,6 @@ public class PostDto {
 
     @NotBlank(message = "내용을 입력해주세요.")
     @Size(max = 255, message = "내용을 255자 이내로 입력해주세요.")
-    private String contents;
+    private String content;
 
 }

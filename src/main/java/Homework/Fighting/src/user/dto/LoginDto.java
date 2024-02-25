@@ -9,11 +9,11 @@ import lombok.Setter;
 @Setter
 @Getter
 @NoArgsConstructor
-public class SignupDto {
+public class LoginDto {
     //아이디 조건 추가하기
     @NotBlank(message = "아이디를 입력해주세요.")
     @Size(min = 5, max = 20, message = "아이디는 5자 이상이여야 합니다.")
-    private String loginId;
+    private String username;
 
     //비밀번호 조건 추가하기
     @NotBlank(message = "비밀번호를 입력해주세요.")

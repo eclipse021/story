@@ -4,7 +4,7 @@ import Homework.Fighting.config.BaseEntity;
 import Homework.Fighting.src.story.entity.BlogEntity;
 import Homework.Fighting.src.story.entity.CommentEntity;
 import Homework.Fighting.src.story.entity.PostEntity;
-import Homework.Fighting.src.user.dto.SignupDto;
+import Homework.Fighting.src.user.dto.LoginDto;
 import Homework.Fighting.src.user.dto.UserDto;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -27,7 +27,7 @@ public class UserEntity extends BaseEntity {
 
     //아이디 조건 추가하기
     @Column(nullable = false, length = 20)
-    private String loginId;
+    private String username;
 
     //비밀번호 조건 추가하기
     @Column(nullable = false)
@@ -64,11 +64,11 @@ public class UserEntity extends BaseEntity {
         this.profile = userDto.getProfile();
     }
 
-    public UserEntity(SignupDto signupDto, String encPassword){
-        this.loginId = signupDto.getLoginId();
+    public UserEntity(LoginDto loginDto, String encPassword){
+        this.username = loginDto.getUsername();
         this.password = encPassword;
-        this.email = signupDto.getEmail();
-        this.nickname = signupDto.getNickname();
+        this.email = loginDto.getEmail();
+        this.nickname = loginDto.getNickname();
     }
 
     public void updateUser(UserDto userDto){

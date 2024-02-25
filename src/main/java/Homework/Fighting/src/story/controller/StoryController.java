@@ -1,10 +1,9 @@
 package Homework.Fighting.src.story.controller;
 
+import Homework.Fighting.config.BaseEntity;
 import Homework.Fighting.config.BaseException;
 import Homework.Fighting.config.BaseResponse;
-import Homework.Fighting.src.story.dto.BlogDto;
-import Homework.Fighting.src.story.dto.CommentDto;
-import Homework.Fighting.src.story.dto.PostDto;
+import Homework.Fighting.src.story.dto.*;
 import Homework.Fighting.src.story.entity.BlogEntity;
 import Homework.Fighting.src.story.entity.CommentEntity;
 import Homework.Fighting.src.story.service.StoryService;
@@ -78,6 +77,17 @@ public class StoryController {
         }
     }
 
+    //블로그 조회 구현 중
+    /*@GetMapping("/blog/{blog_id}")
+    public BaseResponse<GetBlogDto> getBlogScreen(@PathVariable("blog_id") Long blogId){
+        try{
+            return storyService.getBlogScreen(blogId);
+        }
+        catch (BaseException e){
+            return new BaseResponse<GetBlogDto>(e.getStatus());
+        }
+    }*/
+
     //게시글 생성
     @PostMapping("/{blog_id}/post")
     public BaseResponse<String> createPost(@RequestBody @Valid PostDto postDto, @PathVariable("blog_id") Long blogId){
@@ -91,17 +101,19 @@ public class StoryController {
 
     }
 
-    //블로그 보기
-    @GetMapping("/blog/{blog_id}")
-    public BlogEntity getBlogScreen(@PathVariable("blog_id") Long blogId){
+    //게시글 조회
+    @GetMapping("/{blog_id}/{post_id}")
+    public BaseResponse<GetPostDto> GetPost(@PathVariable("blog_id") Long blogId, @PathVariable("post_id") Long postId){
         try{
-            return storyService.getBlogScreen(blogId);
+            GetPostDto getPostDto = storyService.getPost(userId,blogId, postId);
+            return new BaseResponse<>(getPostDto);
+
         }
-        catch (Exception e){
-            System.out.println(e.getMessage());
-            return new BlogEntity();
+        catch (BaseException e){
+            return new BaseResponse<>(e.getStatus());
         }
     }
+
 
     //댓글 작성
     @PostMapping("/{post_id}/comment")

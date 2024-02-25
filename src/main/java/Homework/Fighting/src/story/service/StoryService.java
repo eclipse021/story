@@ -3,9 +3,7 @@ package Homework.Fighting.src.story.service;
 import Homework.Fighting.config.BaseException;
 import Homework.Fighting.config.BaseResponseStatus;
 import Homework.Fighting.config.Status;
-import Homework.Fighting.src.story.dto.BlogDto;
-import Homework.Fighting.src.story.dto.CommentDto;
-import Homework.Fighting.src.story.dto.PostDto;
+import Homework.Fighting.src.story.dto.*;
 import Homework.Fighting.src.story.entity.BlogEntity;
 import Homework.Fighting.src.story.entity.CommentEntity;
 import Homework.Fighting.src.story.entity.PostEntity;
@@ -19,6 +17,8 @@ import Homework.Fighting.src.user.dto.UserDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -120,17 +120,67 @@ public class StoryService {
                 () -> new BaseException(BaseResponseStatus.Blog_no_exist)
         );
         try{
+            CommentEntity comment;
             //groupNumber가 없을 수도 있으니 유효성 검사 후 값을 넣어주자.
             Integer maxGroupNumber = commentRepository.maxGroupNumber();
             if(maxGroupNumber == null){
-                CommentEntity comment = new CommentEntity(commentDto.getContent(),1 ,0,user,post);
+                comment = new CommentEntity(commentDto.getContent(),1 ,0,user,post);
             }else {
-                CommentEntity comment = new CommentEntity(commentDto.getContent(),maxGroupNumber+1 ,0,user,post);
+                comment = new CommentEntity(commentDto.getContent(),maxGroupNumber+1 ,0,user,post);
             }
+
+            user.getCommentList().add(comment);
+            post.getCommentList().add(comment);
+
+            commentRepository.save(comment);
 
         } catch (Exception e){
           throw new BaseException(BaseResponseStatus.Error);
         };
 
+    }
+
+    public GetPostDto getPost(Long userId, Long blogId, Long postId) {
+        UserEntity user = userRepository.findUserEntityByUserIdAndStatus(userId, Status.ACTIVE).orElseThrow(
+                () -> new BaseException(BaseResponseStatus.User_no_exist)
+        );
+
+        BlogEntity blog = blogRepository.findBlogEntityByBlogIdAndStatus(blogId, Status.ACTIVE).orElseThrow(
+                () -> new BaseException(BaseResponseStatus.Blog_no_exist)
+        );
+
+        PostEntity post = postRepository.findByPostIdAndStatus(postId, Status.ACTIVE).orElseThrow(
+                () -> new BaseException(BaseResponseStatus.Post_no_exist)
+        );
+
+        List<CommentEntity> commentEntityList = commentRepository.findCommentEntitiesByPostAndStatus(post, Status.ACTIVE);
+
+        List<GetCommentDto> commentDtoList = new ArrayList<>();
+
+        for(CommentEntity commentEntity : commentEntityList){
+            GetCommentDto getCommentDto = new GetCommentDto(
+                    commentEntity.getUser().getNickname(),
+                    commentEntity.getUser().getProfile(),
+                    commentEntity.getContents(),
+                    commentEntity.getCountLike(),
+                    commentEntity.getCreatedAt()
+            );
+
+            commentDtoList.add(getCommentDto);
+        }
+
+
+        GetPostDto getPostDto = new GetPostDto(
+                user.getNickname(),
+                blog.getName(),
+                post.getTitle(),
+                post.getCreatedAt(),
+                post.getContents(),
+                post.getCountLike(),
+
+                commentDtoList
+        );
+
+    return getPostDto;
     }
 }
