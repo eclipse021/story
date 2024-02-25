@@ -36,7 +36,8 @@ public enum BaseResponseStatus {
 
 
     //이슈
-    Error(false, 5000, "에러가 발생했습니다.");
+    Error(false, 5000, "에러가 발생했습니다."),
+    DATABASE_ERROR(false, 5001, "데이터베이스 에러가 발생했습니다.");
     private boolean isSuccess;
     private int code;
     private String message;

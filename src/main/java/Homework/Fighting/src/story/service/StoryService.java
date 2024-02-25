@@ -140,18 +140,20 @@ public class StoryService {
 
     }
 
-    public GetPostDto getPost(Long userId, Long blogId, Long postId) {
+    public GetPostDto getPost(Long userId, Long postId) {
         UserEntity user = userRepository.findUserEntityByUserIdAndStatus(userId, Status.ACTIVE).orElseThrow(
                 () -> new BaseException(BaseResponseStatus.User_no_exist)
         );
 
-        BlogEntity blog = blogRepository.findBlogEntityByBlogIdAndStatus(blogId, Status.ACTIVE).orElseThrow(
-                () -> new BaseException(BaseResponseStatus.Blog_no_exist)
-        );
 
         PostEntity post = postRepository.findByPostIdAndStatus(postId, Status.ACTIVE).orElseThrow(
                 () -> new BaseException(BaseResponseStatus.Post_no_exist)
         );
+
+        if(post.getBlog() == null){
+            throw new BaseException(BaseResponseStatus.DATABASE_ERROR);
+        }
+        BlogEntity blog = post.getBlog();
 
         List<CommentEntity> commentEntityList = commentRepository.findCommentEntitiesByPostAndStatus(post, Status.ACTIVE);
 

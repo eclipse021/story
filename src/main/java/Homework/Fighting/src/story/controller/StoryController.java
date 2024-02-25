@@ -102,10 +102,10 @@ public class StoryController {
     }
 
     //게시글 조회
-    @GetMapping("/{blog_id}/{post_id}")
-    public BaseResponse<GetPostDto> GetPost(@PathVariable("blog_id") Long blogId, @PathVariable("post_id") Long postId){
+    @GetMapping("/{post_id}")
+    public BaseResponse<GetPostDto> GetPost(@PathVariable("post_id") Long postId){
         try{
-            GetPostDto getPostDto = storyService.getPost(userId,blogId, postId);
+            GetPostDto getPostDto = storyService.getPost(userId,postId);
             return new BaseResponse<>(getPostDto);
 
         }
